@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Livros</title>
+	<link rel="stylesheet" href="./src/css/reset.css">
+	<link rel="stylesheet" href="./src/css/style.css">
+    <style>
+        table {
+			background-color: white;
+			color:black;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+	<main>
+		<h1>Lista de Livros</h1>
+		    <table id="livros-table">
+		        <thead>
+		            <tr>
+		                <th>ID</th>
+		                <th>isbn</th>
+		                <th>Título</th>
+		                <th>Descrição</th>
+		                <th>Editora</th>
+		                <th>Ano</th>
+		                <th>Gênero</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <!-- Livros serão inseridos aqui -->
+		        </tbody>
+		    </table>
+	</main>
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('http://localhost:8080/biblioteca/livro/all')
+                .then(response => response.json())
+                .then(livros => {
+                    const tbody = document.querySelector('#livros-table tbody');
+                    livros.forEach(livro => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${livro.id}</td>
+                            <td>${livro.isbn}</td>
+                            <td>${livro.titulo}</td>
+                            <td>${livro.descricao}</td>
+                            <td>${livro.editora}</td>
+                            <td>${livro.ano}</td>
+                            <td>${livro.genero}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar livros:', error);
+                });
+        });
+    </script>
+</body>
+</html>

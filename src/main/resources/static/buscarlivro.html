@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./src/css/reset.css">
+	<link rel="stylesheet" href="./src/css/style.css">
+    <title>Detalhes do Livro</title>
+</head>
+<body>
+	<style>
+	    #buscar {
+			width:60%;
+			background-color: white;
+			color:black;
+
+	    }	
+	 #resultado{
+		background-color: white;
+				color:black;
+				width:60%;
+		
+	 }
+	</style>
+	
+	<main>
+		<div id="buscar">
+			<h1>Buscar Livro por ID</h1>
+			  <input type="number" id="livroId" placeholder="Digite o ID do Livro" />
+			  <button onclick="buscarLivro()">Buscar Livro</button>
+		    </div>
+  
+
+    <div id="resultado">
+    </div>
+	</main>
+    <script>
+        function buscarLivro() {
+            const livroId = document.getElementById('livroId').value;
+            if (livroId) {
+                fetch(`http://localhost:8080/biblioteca/livro/${livroId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Livro não encontrado');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        document.getElementById('resultado').innerHTML = `
+                            <h2>Detalhes do Livro:</h2>
+                            <p><strong>ID:</strong> ${data.id}</p>
+                            <p><strong>ISBN:</strong> ${data.isbn}</p>
+                            <p><strong>Título:</strong> ${data.titulo}</p>
+                            <p><strong>Descrição:</strong> ${data.descricao}</p>
+                            <p><strong>Editora:</strong> ${data.editora}</p>
+                            <p><strong>Ano:</strong> ${data.ano}</p>
+                            <p><strong>Gênero:</strong> ${data.genero}</p>
+                        `;
+                    })
+                    .catch(error => {
+                        document.getElementById('resultado').innerHTML = `<p style="color: red;">${error.message}</p>`;
+                    });
+            } else {
+                alert('Por favor, insira um ID válido.');
+            }
+        }
+    </script>
+</body>
+</html>

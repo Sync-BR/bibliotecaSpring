@@ -14,7 +14,7 @@ public class LivroModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String isbn;
     @Column(nullable = false, unique = true)
     private String titulo;
@@ -38,7 +38,9 @@ public class LivroModel {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-
+    public String getIsbn() {
+        return isbn;
+    }
     public String getTitulo() {
         return titulo;
     }
