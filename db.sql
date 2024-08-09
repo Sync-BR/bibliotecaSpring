@@ -10,6 +10,13 @@ CREATE TABLE `biblioteca`.`livros` (
   `genero` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`, `titulo`));
 
+CREATE TABLE `biblioteca`.`cliente` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  `cpf` VARCHAR(45) NOT NULL,
+  `idade` INT NOT NULL,
+  PRIMARY KEY (`id`));
+
 
 {
   "id": 1,
